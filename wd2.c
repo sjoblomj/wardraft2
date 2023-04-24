@@ -181,44 +181,58 @@ int display_archive_metadata(char *path) {
 
 int main(int argc, char **argv) {
     Instruction i = parse_instructions(argc, argv);
+    int return_code;
 
     switch (i.error) {
         case error_no_instructions:
             printf("Error: No instructions given.\n\n");
             print_help_condense();
-            return 1;
+            return_code = 1;
+            break;
         case error_too_few_arguments:
             printf("Error: Too few arguments given.\n\n");
             print_help_condense();
-            return 1;
+            return_code = 1;
+            break;
         case error_invalid_instructions:
             printf("Error: Invalid instructions: '%s'.\n\n", i.erroneous_argument);
             print_help_condense();
-            return 1;
+            return_code = 1;
+            break;
         case error_no_such_file:
             printf("Error: Given file does not exist: '%s'\n", i.erroneous_argument);
-            return 1;
+            return_code = 1;
+            break;
         case error_no_such_directory:
             printf("Error: Given directory does not exist: '%s'\n", i.erroneous_argument);
-            return 1;
+            return_code = 1;
+            break;
         case error_invalid_index:
             printf("Error: Invalid index: '%s'\n", i.erroneous_argument);
-            return 1;
+            return_code = 1;
+            break;
         case error_invalid_index_not_sorted:
             printf("Error: Indexes not sorted: '%s'\n", i.erroneous_argument);
-            return 1;
+            return_code = 1;
+            break;
         case error_invalid_index_duplicates:
             printf("Error: Indexes contain duplicates: '%s'\n", i.erroneous_argument);
-            return 1;
+            return_code = 1;
+            break;
         case error_too_many_indexes:
             printf("Error: Too many indexes: '%s'\n", i.erroneous_argument);
-            return 1;
+            return_code = 1;
+            break;
         case error_file_too_big:
             printf("Error: Given file is too big: '%s'\n", i.erroneous_argument);
-            return 1;
+            return_code = 1;
+            break;
         case no_error:
-            ;
+            return_code = 0;
+            break;
     }
+    if (return_code > 0)
+        return return_code;
 
     switch (i.action) {
         case print_version_info:
