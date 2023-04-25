@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "knowlegebaseparser.h"
 #include "wararchivelib.h"
 
 
@@ -8,7 +10,7 @@ unsigned char* decompress(unsigned char *archiveptr, unsigned int *uncompressed_
 }
 
 char* identify_archive(int archive_id) {
-    if (archive_id == 0)         return    "DATA.WAR\0"; // WarCraft I
+    if      (archive_id == 0)    return    "DATA.WAR\0"; // WarCraft I
     else if (archive_id == 1000) return "MAINDAT.WAR\0"; // WarCraft II
     else if (archive_id == 2000) return  "SNDDAT.WAR\0"; // WarCraft II
     else if (archive_id == 3000) return  "REZDAT.WAR\0"; // WarCraft II
@@ -52,8 +54,22 @@ void get_index_data(char *archive_path, int index, unsigned int *uncompressed_le
     fclose(file);
 }
 
+void make_output_path(const char *directory_path, const int index, char *archive_name, char *outpath) {
+    char extension[4];
+    char deps[32];
+    char desc[250];
+    int success = get_data_for_index(archive_name, index, extension, deps, desc);
+    if (success != 1)
+        strcpy(extension, "UNK");
+    sprintf(outpath, "%s/%i.%s", directory_path, index, extension);
+}
+
 void extract(char *archive_path, char *directory_path, int number_of_indexes, const int indexes[]) {
+    int archive_id;
     FILE *file = fopen(archive_path, "rb");
+    fseek(file, 6, SEEK_SET);
+    fread(&archive_id, 2, 1, file);
+    char *archive_name = identify_archive(archive_id);
 
     for (int i = 0; i < number_of_indexes; i++) {
         unsigned int offset_start, offset_end;
@@ -69,7 +85,7 @@ void extract(char *archive_path, char *directory_path, int number_of_indexes, co
         unsigned char *entry = decompress(content, &origsize, 1);
 
         char outpath[256];
-        sprintf(outpath, "%s/%i.%s", directory_path, indexes[i], "todo");
+        make_output_path(directory_path, indexes[i], archive_name, outpath);
         FILE *write_ptr = fopen(outpath,"wb");
 
         fwrite(entry, origsize, 1, write_ptr);

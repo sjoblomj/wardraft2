@@ -3,4 +3,4 @@ project(wardraft2 C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(wardraft2 wd2.c parse_input.c wararchivelib.c wararchivelib.h)
+add_executable(wardraft2 wd2.c parse_input.c knowlegebaseparser.c wararchivelib.c)
