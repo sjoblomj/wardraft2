@@ -65,17 +65,22 @@ void make_output_path(const char *directory_path, const int index, char *archive
 }
 
 void extract(char *archive_path, char *directory_path, int number_of_indexes, const int indexes[]) {
-    int archive_id;
+    int number_of_files, archive_id = 0;
+    long hidden_data_size = 0;
     FILE *file = fopen(archive_path, "rb");
-    fseek(file, 6, SEEK_SET);
-    fread(&archive_id, 2, 1, file);
+    get_header_data(file, &number_of_files, &archive_id, &hidden_data_size);
     char *archive_name = identify_archive(archive_id);
 
     for (int i = 0; i < number_of_indexes; i++) {
         unsigned int offset_start, offset_end;
         fseek(file, 8 + (indexes[i] * 4), SEEK_SET);
         fread(&offset_start, 4, 1, file);
-        fread(&offset_end, 4, 1, file);
+        if (indexes[i] == number_of_files - 1) {
+            fseek(file, 0, SEEK_END);
+            offset_end = ftell(file);
+        } else {
+            fread(&offset_end, 4, 1, file);
+        }
         fseek(file, offset_start, SEEK_SET);
 
         unsigned char content[offset_end - offset_start];
