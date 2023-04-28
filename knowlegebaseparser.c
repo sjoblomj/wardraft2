@@ -111,7 +111,10 @@ int list_archive_content(char *path, int show_details, int human_readable) {
                         printf("%6i ", uncompressed_length);
                     }
                 }
-                printf("%s %-11s %s\n", ext, deps, desc);
+                printf("%s  %s", ext, desc);
+                if (strcmp(deps, "") != 0)
+                    printf(" [%s]", deps);
+                printf("\n");
             }
         }
     }
