@@ -10,4 +10,6 @@ void get_index_data(char *archive_path, int index, unsigned int *uncompressed_le
 
 void extract(char *archive_path, char *directory_path, int number_of_indexes, const int indexes[]);
 
+void compress(int sliding_window_size);
+
 #endif // wararchivelib
