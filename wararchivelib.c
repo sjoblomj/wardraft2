@@ -43,7 +43,7 @@ void get_index_data(char *archive_path, int index, unsigned int *uncompressed_le
     fread(&offset_end, 4, 1, file);
     fseek(file, offset_start, SEEK_SET);
 
-    size_t len, cmp;
+    int len, cmp;
     fread(&len, 4, 1, file);
 
     cmp = len >> 24;
