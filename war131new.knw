@@ -22,7 +22,7 @@ KNWB
 18=PAL,Palette: Winter Scenarios
 19=MMI,18,20,21,Minitile mapping info (winter)
 20=MMT,18,19,21,Map mini-tiles (winter)
-21=TMI,19,19,20,Tile mapping info (winter)
+21=TMI,18,19,20,Tile mapping info (winter)
 22=CMT,Tile remapping info (destroyed trees, winter)
 23=CMT,Tile remapping info (destroyed rocks, winter)
 24=CMT,Tile remapping info (destroyed walls, winter)
@@ -265,7 +265,7 @@ KNWB
 281=FNT,Font: Large font: menus
 282=FNT,Font: Small font: menus
 283=FNT,Font: Game font
-284=CMT,Serail ISR code (for PC networking)
+284=CMT,Serial ISR code (for PC networking)
 287=IMG,2,Image: Map border (Top,Humans)
 288=IMG,2,Image: Map border (Top,Orcs)
 289=IMG,2,Image: Map border (Right,Humans)
