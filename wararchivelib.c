@@ -110,11 +110,6 @@ int get_location_in_buffer(
         int search_buffer_index,
         int search_buffer_len
 ) {
-    printf("get_location_in_buffer: '");
-    for (int j = 0; j < elems_len; j++) {
-        printf("%c", elems[j] == '\n' ? '0' : elems[j]);
-    }
-    printf("', elems_len: %i, sbl: %i\n", elems_len, search_buffer_len);
 
     int i, offset = 0;
     for (i = 0; i < search_buffer_len; i++) {
@@ -127,7 +122,6 @@ int get_location_in_buffer(
     }
     if (elems_len <= offset) {
         // All the content of elems are in search_buffer
-        printf("All the content of elems are in search_buffer at %i\n", i - elems_len);
         return i - elems_len;
     }
     return -1;
