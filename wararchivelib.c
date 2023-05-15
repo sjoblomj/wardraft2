@@ -183,6 +183,7 @@ unsigned char* compress_content(
             if (next_index != -1 && i == elems_len - 1) {
                 // Only if it's the last character then add the next character to the text the token is representing
                 potential_match[pm_size++] = elems[i];
+                pm_size = 0;
             }
             if (pm_size > 2) { // We need 2 bytes to represent an encoding; the data compressed needs to be greater for this to be worthwhile.
                 int index = get_location_in_buffer(potential_match, pm_size, sliding_window, sw_index, sw_size);
@@ -203,23 +204,26 @@ unsigned char* compress_content(
                     prev_flag_pos = data;
                     *data++ = 0xff;
                 }
+                pm_size = 0;
 
             } else {
+                flag <<= 1;
+                flag |= 1;
+                flags_added++;
+
+                extend_sliding_window(sliding_window, potential_match[0], &sw_index, &sw_size, sliding_window_size);
+                *data++ = potential_match[0];
+
+                if (write_flag(&flags_added, &flag, prev_flag_pos)) {
+                    prev_flag_pos = data;
+                    *data++ = 0xff;
+                }
+
+                pm_size--;
                 for (int k = 0; k < pm_size; k++) {
-                    flag <<= 1;
-                    flag |= 1;
-                    flags_added++;
-
-                    extend_sliding_window(sliding_window, potential_match[k], &sw_index, &sw_size, sliding_window_size);
-                    *data++ = potential_match[k];
-
-                    if (write_flag(&flags_added, &flag, prev_flag_pos)) {
-                        prev_flag_pos = data;
-                        *data++ = 0xff;
-                    }
+                    potential_match[k] = potential_match[k + 1];
                 }
             }
-            pm_size = 0;
         }
         potential_match[pm_size++] = elems[i];
     }
