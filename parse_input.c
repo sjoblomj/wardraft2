@@ -164,6 +164,20 @@ Instruction parse_instructions(int argc, char **argv) {
         }
         instruction.archive_path = argv[2];
 
+    } else if (strcmp(argv[1], "i") == 0) {
+        instruction.action = insert_content;
+        if (argc != 3) {
+            instruction.error = error_too_few_arguments;
+            return instruction;
+        }
+
+        if (!file_exists(argv[2])) {
+            instruction.error = error_no_such_file;
+            instruction.erroneous_argument = argv[2];
+            return instruction;
+        }
+        instruction.archive_path = argv[2];
+
 	} else if (strcmp(argv[1], "x") == 0) {
         instruction.action = extract_content;
         int argoffset = 0;

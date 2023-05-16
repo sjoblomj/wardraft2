@@ -136,6 +136,7 @@ int main(int argc, char **argv) {
             return display_archive_metadata(argv[2]);
 
         case extract_content:
+/*
             printf("Extract content\n");
             printf("Dir: '%s'\n", i.output_directory);
 
@@ -144,9 +145,13 @@ int main(int argc, char **argv) {
                 printf("%d ", i.indexes[j]);
             }
             printf("\n");
-
+*/
             extract(i.archive_path, i.output_directory, i.number_of_indexes, i.indexes);
 
+            return 0;
+
+        case insert_content:
+            compress(0xfff);
             return 0;
 
         default:
