@@ -25,6 +25,9 @@ void print_help_condense() {
     printf("- Replace the files in the given indexes with those provided\n");
     printf("  wd2 r 0,3-5 path/to/archive.[war|cud|sud] file0 file3 file4 file5\n\n");
 
+    printf("- Inserts the file before the given index\n");
+    printf("  wd2 i 3 path/to/archive.[war|cud|sud] file0\n\n");
+
     printf("- Deletes the files in the given indexes\n");
     printf("  wd2 d 3,5-7 path/to/archive.[war|cud|sud]\n\n");
 
