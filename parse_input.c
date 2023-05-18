@@ -178,6 +178,20 @@ Instruction parse_instructions(int argc, char **argv) {
         }
         instruction.archive_path = argv[3];
 
+    } else if (strcmp(argv[1], "r") == 0) {
+        instruction.action = replace_content;
+        if (argc < 4) {
+            instruction.error = error_too_few_arguments;
+            return instruction;
+        }
+
+        if (!file_exists(argv[3])) {
+            instruction.error = error_no_such_file;
+            instruction.erroneous_argument = argv[3];
+            return instruction;
+        }
+        instruction.archive_path = argv[3];
+
 	} else if (strcmp(argv[1], "x") == 0) {
         instruction.action = extract_content;
         int argoffset = 0;

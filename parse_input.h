@@ -5,7 +5,7 @@
 typedef enum action {
     print_version_info, print_detailed_help, print_condense_help,
     list_content, list_content_detailed, list_content_detailed_human_readable,
-    display_metadata, extract_content, insert_content,
+    display_metadata, extract_content, insert_content, replace_content,
 } Action;
 
 typedef enum error {

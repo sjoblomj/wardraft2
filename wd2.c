@@ -157,6 +157,10 @@ int main(int argc, char **argv) {
             compress(0xfff);
             return 0;
 
+        case replace_content:
+            compress(0xfff);
+            return 0;
+
         default:
             printf("Error\n");
             return 1;
