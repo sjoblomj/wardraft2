@@ -164,6 +164,7 @@ unsigned char* compress_content(
 
     unsigned char sliding_window[sliding_window_size + 1];
     unsigned char potential_match[sliding_window_size + 1];
+    memset(sliding_window, 0, sliding_window_size);
 
     unsigned char flag = 0;
     unsigned short flags_added = 0;
@@ -172,7 +173,7 @@ unsigned char* compress_content(
     unsigned char *data;
     unsigned char *prev_flag_pos;
     start_of_data = data = prev_flag_pos = (unsigned char*) malloc(elems_len + (elems_len / bytes_in_a_flag));
-    int sw_index = 0, sw_size = 0, pm_index = 0, pm_size = 0;
+    int sw_index = 0, sw_size = sliding_window_size, pm_index = 0, pm_size = 0;
 
     *data++ = 0xff;
     for (int i = 0; i < elems_len; i++) {
